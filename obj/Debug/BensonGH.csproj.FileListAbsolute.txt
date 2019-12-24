@@ -1,0 +1,7 @@
+D:\Projects\Git Repos\BensonGH\BensonGH\bin\BensonGH.dll
+D:\Projects\Git Repos\BensonGH\BensonGH\bin\BensonGH.pdb
+D:\Projects\Git Repos\BensonGH\BensonGH\obj\Debug\BensonGH.csprojAssemblyReference.cache
+D:\Projects\Git Repos\BensonGH\BensonGH\obj\Debug\BensonGH.dll
+D:\Projects\Git Repos\BensonGH\BensonGH\obj\Debug\BensonGH.pdb
+D:\Projects\Git Repos\BensonGH\BensonGH\obj\Debug\BensonGH.Properties.Resources.resources
+D:\Projects\Git Repos\BensonGH\BensonGH\obj\Debug\BensonGH.csproj.GenerateResource.cache

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="BenGHC.cs" />
     <Compile Include="BensonGHInfo.cs" />
+    <Compile Include="lineToSurfaceBenGH.cs" />
     <Compile Include="OndulatingSurface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

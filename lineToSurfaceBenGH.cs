@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BensonGH.Properties;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
@@ -14,7 +15,7 @@ namespace BensonGH
         public lineToSurfaceBenGH()
           : base("lineToSurfaceBenGH", "lineToSrf",
               "Line projected to surface roof in Z direction. To create a flat curtain panel",
-              "Geometry", "Curtain Panel")
+              "BensonGHC", "Curtain Panels")
         {
         }
 
@@ -24,7 +25,7 @@ namespace BensonGH
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("iCurve", "C", "Input base curve for wall outline", GH_ParamAccess.item);
-            pManager.AddSurfaceParameter("iSurface", "S", "Input Surface for roof", GH_ParamAccess.item);
+            pManager.AddBrepParameter("iSurface", "S", "Input Surface for roof", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -42,8 +43,8 @@ namespace BensonGH
         protected override void SolveInstance(IGH_DataAccess DA)
         {
 
-            Curve iLine = new Curve( );
-            Surface iSurface = new Surface( );
+            Curve iLine = null;
+            Brep iSurface = null;
 
             //Rhino.Geometry.Curve curve = Rhino.Geometry.Curve.Unset;
 
@@ -65,6 +66,7 @@ namespace BensonGH
 
 
             Brep[] oSurace = Brep.CreateFromLoft(lstCrv, Point3d.Unset, Point3d.Unset, LoftType.Straight, false);
+            
 
 
             DA.SetDataList(0, oSurace);
@@ -79,7 +81,7 @@ namespace BensonGH
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                return Resources._24l;
             }
         }
 

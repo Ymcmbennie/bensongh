@@ -25,6 +25,7 @@ namespace BensonGH
         {
             pManager.AddNumberParameter("iSize", "iS", "Size of surface based on coordinates of Pi", GH_ParamAccess.item, 10.0);
             pManager.AddNumberParameter("iScale", "iSc", "Scallar value of the size of surface", GH_ParamAccess.item, 5);
+            pManager.AddPointParameter("iOrigin", "O", "Origin point to put the surface, if not set default origin", GH_ParamAccess.item, new Point3d(0, 0, 0));
         }
 
         /// <summary>
@@ -44,9 +45,11 @@ namespace BensonGH
             double iSize = 0.0;
             double iScale = 0.0;
             double iRes = 0.5;
+            Point3d iOrigin = new Point3d(0,0,0);
 
             if (!DA.GetData(0, ref iSize)) return;
             if (!DA.GetData(1, ref iScale)) return;
+            if (!DA.GetData(2, ref iOrigin)) return;
 
             if (iSize < 0.0)
             {
@@ -66,7 +69,7 @@ namespace BensonGH
                 for (double j = -iSize; j < iSize; j += iRes)
                 {
                     Double z = Math.Sin(Math.Sqrt(i * i + j * j));
-                    oPoints.Add(new Point3d(i * iScale, j * iScale, z * iScale));
+                    oPoints.Add(new Point3d(iOrigin.X + i * iScale, iOrigin.Y +  j * iScale, iOrigin.Z + z * iScale));
                 }
             }
 
@@ -93,7 +96,7 @@ namespace BensonGH
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Resources._24w;
+                return Resources._24o;
             }
         }
 

@@ -68,6 +68,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ShigerubanPattern.cs" />
+    <Compile Include="surfaceSplit.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -95,6 +96,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Asset 4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Asset 5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Asset 6.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

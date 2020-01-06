@@ -27,6 +27,7 @@ namespace BensonGH
             pManager.AddSurfaceParameter("iSurface", "S", "Input Surface for roof", GH_ParamAccess.item);
             pManager.AddNumberParameter("Horizontal members", "iU", "Number of Pattern in X", GH_ParamAccess.item, 5.0);
             pManager.AddNumberParameter("Vertical members", "iV", "Number of Pattern in Y", GH_ParamAccess.item, 5.0);
+            pManager.AddNumberParameter("Radius", "iX", "Radius of out put pipes mullions", GH_ParamAccess.item, 2.0);
         }
 
         /// <summary>
@@ -48,25 +49,32 @@ namespace BensonGH
             Surface iSurface = null;
             double iV = 0.0;
             double iU = 0.0;
+            double iX = 0.0;
 
             //Rhino.Geometry.Curve curve = Rhino.Geometry.Curve.Unset;
 
             if (!DA.GetData(0, ref iSurface)) return;
             if (!DA.GetData(1, ref iV)) return;
             if (!DA.GetData(2, ref iU)) return;
+            if (!DA.GetData(3, ref iX)) return;
 
             //Convert surface to brep
             Brep bp = iSurface.ToBrep();
+
 
             //List of curves
             List<Curve> crvs = new List<Curve>();
             List<Curve> crvsV = new List<Curve>();
 
-            //thr loop
+            //iso curve length
+            double len = iSurface.IsoCurve(0, 0.0).GetLength();
+            double baseD = iSurface.IsoCurve(0, 0.0).PointAt(0).Z;
+
+            //the loop
             for (double i = 0; i < 1; i += 1 / iV)
             {
                 //Make the plane
-                Point3d pt = new Point3d(0, 0, i * iSurface.IsoCurve(0, 0.5).GetLength());
+                Point3d pt = new Point3d(0, 0, baseD + i * len);
                 Vector3d vZ = new Vector3d(0, 0, 1);
                 Plane pln = new Plane(pt, vZ);
 
@@ -75,31 +83,36 @@ namespace BensonGH
                 Point3d[] pts;
 
                 //Intersect geometry
-                Rhino.Geometry.Intersect.Intersection.BrepPlane(bp, pln, 2.0, out crvs01, out pts);
-
-                //Add to curves
-                crvs.Add(crvs01[0]);
-                
+                bool didItCut = Rhino.Geometry.Intersect.Intersection.BrepPlane(bp, pln, 2.0, out crvs01, out pts);
+                if (didItCut)
+                {
+                    foreach (Curve crvE in crvs01)
+                    {
+                        crvs.Add(crvE);
+                    }
+                }
 
             }
             //vertical ones
-            var bs = iSurface.IsoCurve(1, 0.5);
+            Curve bs = iSurface.IsoCurve(1, 0.5);
             for (double i = 0; i < 1; i += 1 / iU)
             {
                 crvsV.Add(iSurface.IsoCurve(0, i * bs.GetLength()));
             }
 
+
+            //pipe from lists
             List<Brep> breps = new List<Brep>();
-            for (int d = 0; d < crvs.Count; d++)
+
+            foreach (Curve crvT in crvs)
             {
-                breps.Add(Brep.CreatePipe(crvs[d], 0.2, true, 0, true, 2.00, 0.01)[0]);
+                breps.Add(Brep.CreatePipe(crvT, iX, true, 0, true, 2.00, 0.01)[0]);
             }
 
-            for (int d = 0; d < crvsV.Count; d++)
+            foreach (Curve crvT in crvsV)
             {
-                breps.Add(Brep.CreatePipe(crvsV[d], 0.2, true, 0, true, 2.00, 0.01)[0]);
+                breps.Add(Brep.CreatePipe(crvT, iX, true, 0, true, 2.00, 0.01)[0]);
             }
-
 
             DA.SetDataList(0, crvs);
             DA.SetDataList(1, crvsV);
@@ -116,7 +129,7 @@ namespace BensonGH
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Resources._24y;
+                return Resources._24t;
             }
         }
 

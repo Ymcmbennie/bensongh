@@ -83,9 +83,29 @@ namespace BensonGH.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _24o {
+            get {
+                object obj = ResourceManager.GetObject("24o", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _24p {
             get {
                 object obj = ResourceManager.GetObject("_24p", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _24t {
+            get {
+                object obj = ResourceManager.GetObject("24t", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
